@@ -52,11 +52,11 @@ function autoload($class)
 			$dir = BASEPATH.'libraries'.DIRECTORY_SEPARATOR;
 			$class = ($subclass === 'Driver_Library') ? 'Driver' : $subclass;
 		}
-		elseif (preg_match('/^CI_DB_(.+)_(driver|forge|result|utility)$/', $class, $m) && count($m) === 3)
+		elseif (preg_match('/^CI_DB_(native|pdo)_(.+)_(driver|forge|result|utility)$/', $class, $m) && count($m) === 4)
 		{
 			$driver_path = BASEPATH.'database'.DIRECTORY_SEPARATOR.'drivers'.DIRECTORY_SEPARATOR;
 			$dir = $driver_path.$m[1].DIRECTORY_SEPARATOR;
-			$file = $dir.$m[1].'_'.$m[2].'.php';
+			$file = $dir.$m[2].'_'.$m[3].'.php';
 		}
 		elseif (strpos($class, 'CI_DB') === 0)
 		{
@@ -69,7 +69,7 @@ function autoload($class)
 		}
 	}
 
-	$file = (isset($file)) ? $file : $dir.$class.'.php';
+	$file = isset($file) ? $file : $dir.$class.'.php';
 
 	if ( ! file_exists($file))
 	{

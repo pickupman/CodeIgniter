@@ -11,7 +11,7 @@ class Mock_Database_Drivers_Sqlite extends Mock_Database_DB_Driver {
 	 */
 	public function __construct($config = array())
 	{
-		parent::__construct('CI_DB_sqlite3_driver', $config);
+		parent::__construct('CI_DB_native_sqlite3_driver', $config);
 	}
 
 }
