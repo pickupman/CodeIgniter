@@ -75,7 +75,7 @@ abstract class CI_DB_native_driver extends CI_DB {
 	 */
 	public function affected_rows()
 	{
-		$func = $this->function_prefix.'_affected_rows';
+		$func = $this->function_prefix.'affected_rows';
 		return @$func($this->conn_id);
 	}
 
@@ -88,7 +88,7 @@ abstract class CI_DB_native_driver extends CI_DB {
 	 */
 	protected function _close()
 	{
-		$func = $this->function_prefix.'_close';
+		$func = $this->function_prefix.'close';
 		@$func($this->conn_id);
 	}
 

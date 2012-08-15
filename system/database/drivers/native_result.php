@@ -97,7 +97,7 @@ abstract class CI_DB_native_result extends CI_DB_result {
 	{
 		if ($this->function_prefix !== NULL)
 		{
-			$func = $this->function_prefix.'_num_fields';
+			$func = $this->function_prefix.'num_fields';
 			return function_exists($func)
 				? $func($this->result_id)
 				: FALSE;
@@ -117,7 +117,7 @@ abstract class CI_DB_native_result extends CI_DB_result {
 	{
 		if ( ! empty($this->result_id))
 		{
-			$func = $this->function_prefix.'_free_result';
+			$func = $this->function_prefix.'free_result';
 			$func($this->result_id);
 			$this->result_id = FALSE;
 		}
@@ -134,7 +134,7 @@ abstract class CI_DB_native_result extends CI_DB_result {
 	 */
 	protected function _fetch_assoc()
 	{
-		$func = $this->function_prefix.'_fetch_assoc';
+		$func = $this->function_prefix.'fetch_assoc';
 		return $func($this->result_id);
 	}
 
