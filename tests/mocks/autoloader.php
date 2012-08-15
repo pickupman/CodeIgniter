@@ -52,16 +52,23 @@ function autoload($class)
 			$dir = BASEPATH.'libraries'.DIRECTORY_SEPARATOR;
 			$class = ($subclass === 'Driver_Library') ? 'Driver' : $subclass;
 		}
-		elseif (preg_match('/^CI_DB_(native|pdo)_(.+)_(driver|forge|result|utility)$/', $class, $m) && count($m) === 4)
-		{
-			$driver_path = BASEPATH.'database'.DIRECTORY_SEPARATOR.'drivers'.DIRECTORY_SEPARATOR;
-			$dir = $driver_path.$m[1].DIRECTORY_SEPARATOR;
-			$file = $dir.$m[2].'_'.$m[3].'.php';
-		}
 		elseif (strpos($class, 'CI_DB') === 0)
 		{
-			$dir = BASEPATH.'database'.DIRECTORY_SEPARATOR;
-			$file = $dir.str_replace(array('CI_DB','active_record'), array('DB', 'active_rec'), $subclass).'.php';
+			if (preg_match('/^CI_DB_(native|pdo)_([a-z0-9]+_driver|_result)$/', $class, $m) && count($m) === 3)
+			{
+				$driver_path = BASEPATH.'database'.DIRECTORY_SEPARATOR.'drivers'.DIRECTORY_SEPARATOR;
+				$dir = ($m[2] === '_result')
+					? $driver_path
+					: $driver_path.$m[1].DIRECTORY_SEPARATOR;
+
+				$file = $dir.$m[1].'_'.$m[2].'.php';
+			}
+//			elseif (preg_match('/^CI_DB_(native|pdo)_forge
+			else
+			{
+				$dir = BASEPATH.'database'.DIRECTORY_SEPARATOR;
+				$file = $dir.str_replace(array('CI_DB','active_record'), array('DB', 'active_rec'), $subclass).'.php';
+			}
 		}
 		else
 		{
