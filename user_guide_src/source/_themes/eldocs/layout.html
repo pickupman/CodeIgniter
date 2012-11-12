@@ -75,7 +75,25 @@
 	    <link rel="prev" title="{{ prev.title|striptags|e }}" href="{{ prev.link|e }}" />
 	    {%- endif %}
 	{%- endblock %}
-		{%- block extrahead %} {% endblock %}
+		{%- block extrahead %}
+		<script type="text/javascript">
+			jQuery(document).ready(function($){
+				var toc = true;
+				$(document).bind('keydown', function(event){
+					if (event.which == '191' && $("input[name='q']").is(":focus") == false)
+					{
+						$("input[name='q']").focus();
+						event.preventDefault();
+					}
+					if (event.which == '72' && $("input[name='q']").is(":focus") == false )
+					{
+						$("#table-contents").css({left: toc ? 0 : '-520px'});
+						toc = !toc;
+					}
+				});
+			});
+		</script>
+		{% endblock %}
 	</head>
 	<body>
 	{%- block content %}
