@@ -35,7 +35,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @author		EllisLab Dev Team
  * @link		http://codeigniter.com/user_guide/libraries/javascript.html
  */
-class CI_Jquery extends CI_Javascript {
+class CI_Javascript_jquery extends CI_Driver {
 
 	/**
 	 * JavaScript directory location
@@ -85,27 +85,7 @@ class CI_Jquery extends CI_Javascript {
 	 * @var	string
 	 */
 	public $jquery_ajax_img = '';
-
-	// --------------------------------------------------------------------
-
-	/**
-	 * Constructor
-	 *
-	 * @param	array	$params
-	 * @return	void
-	 */
-	public function __construct($params)
-	{
-		$this->CI =& get_instance();
-		extract($params);
-
-		if ($autoload === TRUE)
-		{
-			$this->script();
-		}
-
-		log_message('debug', 'Jquery Class Initialized');
-	}
+	
 
 	// --------------------------------------------------------------------
 	// Event Code
@@ -1065,5 +1045,5 @@ class CI_Jquery extends CI_Javascript {
 
 }
 
-/* End of file Jquery.php */
-/* Location: ./system/libraries/Jquery.php */
+/* End of file Javascript_jquery.php */
+/* Location: ./system/libraries/Javascript/drivers/Javascript_jquery.php */
