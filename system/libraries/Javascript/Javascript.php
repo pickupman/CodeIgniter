@@ -49,7 +49,7 @@ class CI_Javascript extends CI_Driver_Library {
 	 *
 	 * @var	string
 	 */
-	protected $_javascript_location = 'js';
+	protected $_javascript_location = '';
 
 	/**
 	 * Valid Javascript Drivers
@@ -80,7 +80,7 @@ class CI_Javascript extends CI_Driver_Library {
 			'javascript_location'
 		);
 
-		if( ! empty($options))
+		if ( ! empty($options))
 		{
 			foreach($defaults as $key)
 			{
@@ -92,10 +92,22 @@ class CI_Javascript extends CI_Driver_Library {
 			}
 		}
 
+		$this->CI =& get_instance();
+
+		$_javascript_location = $this->CI->config->item('javascript_location');
+
 		//Load default javascript source
-		if($this->_autoload === TRUE)
+		if ($this->_autoload === TRUE && $this->_javascript_location !== '')
 		{
 			$this->{$this->_adapter}->script($this->_javascript_location);
+		}
+		elseif ($this->_autoload === TRUE && $this->_javascript_location == '' && isset($_javascript_location) && ! empty($_javascript_location))
+		{
+			$this->{$this->_adapter}->script($_javascript_location);
+		}
+		else
+		{
+			log_message('debug', 'No javascript library set in configuration or passed as an option to constructor');
 		}
 
 		log_message('debug', 'Javascript Class loaded. Driver used: ' . $this->_adapter);
@@ -666,7 +678,7 @@ class CI_Javascript extends CI_Driver_Library {
 			$this->_javascript_location = $this->CI->config->item('javascript_location');
 		}
 
-		if ($relative === TRUE OR strpos($external_file, 'http://') === 0 OR strpos($external_file, 'https://') === 0)
+		if ($relative === TRUE OR strpos($external_file, 'http://') === 0 OR strpos($external_file, 'https://') === 0 OR strpos($external_file, '//') === 0)
 		{
 			$str = $this->_open_script($external_file);
 		}
@@ -701,6 +713,22 @@ class CI_Javascript extends CI_Driver_Library {
 	}
 
 	// --------------------------------------------------------------------
+
+	/**
+	 * Add a javascript file to be loaded
+	 *
+	 *
+	 * @param	string	The path to the script to addd
+	 * @param	bool	Path is relative to docuemnt root folder
+	 * @return	string
+	 */
+	public function script($library_src, $relative = FALSE)
+	{
+		return $this->{$this->_adapter}->_script($library_src, $relative);
+	}
+
+	// --------------------------------------------------------------------
+
 
 	/**
 	 * Open Script

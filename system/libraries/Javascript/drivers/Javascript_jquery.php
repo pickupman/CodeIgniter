@@ -938,7 +938,7 @@ class CI_Javascript_jquery extends CI_Driver {
 		}
 
 		// Inline references
-		$script = '$(document).ready(function() {'."\n"
+		$script = 'jQuery(document).ready(function($) {'."\n"
 			.implode('', $this->jquery_code_for_compile)
 			.'});';
 
@@ -988,13 +988,13 @@ class CI_Javascript_jquery extends CI_Driver {
 	/**
 	 * Script Tag
 	 *
-	 * Outputs the script tag that loads the jquery.js file into an HTML document
+	 * Outputs the script tag that loads the a javascript file into an HTML document
 	 *
 	 * @param	string	$library_src
 	 * @param	bool	$relative
 	 * @return	string
 	 */
-	public function script($library_src = '', $relative = FALSE)
+	public function _script($library_src = '', $relative = FALSE)
 	{
 		$library_src = $this->external($library_src, $relative);
 		$this->jquery_code_for_load[] = $library_src;

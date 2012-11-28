@@ -1,11 +1,11 @@
 .. note:: This driver is experimental. Its feature set and implementation
 		  may change in future releases. 
 
-################
-Javascript Class
-################
+#################
+Javascript Driver
+#################
 
-This Class provides an interface to Javascript libraries.  Currently only 
+This Driver provides an interface to Javascript libraries.  Currently only 
 the `jQuery library <http://jquery.com/>`_ is supported.  Note that 
 CodeIgniter does not require Javascript to run.
 
@@ -18,7 +18,7 @@ the path to the Javascript library that you'll be using.
 	::
 
 		$config['javascript_location'] = 
-			'//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js';
+			'//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js';
 
 	.. note:: The example above uses the `Google CDN 
 		<http://developers.google.com/speed/libraries/devguide>`_ 
@@ -41,12 +41,21 @@ What you'll need in your controller
 
 Load the library
 ----------------
-Initialize the Javascript driver in your controller.
+Initialize the Javascript driver in your controller and name the adapter you would 
+like to use.
 
 	::
 
 			$this->load->driver('javascript', array('adapter' => 'jquery'));
 
+
+You may also pass in the options array the javascript location library as well.
+
+	::
+	
+		$this->load->driver('javascript', array('adapter' => 'jquery', 
+			'javascript_location' => '//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js'));
+		
 
 Add Javascript Elements and Compile
 -----------------------------------
@@ -56,7 +65,8 @@ call compile() to make them available to the view.
 	::
 
 			$this->javascript->click('#button', 
-				$this->javascript->toggle('#container') );
+				$this->javascript->toggle('#container')
+			);
 			$this->javascript->compile();
 
 This example sets up a click event for <div id="button"> so that when it's
@@ -81,28 +91,38 @@ example:
 	::
 
 			<head>
-			    <?php echo $library_src;?>
-			    <?php echo $script_foot;?> 
+			    <?php if (isset($library_src)) echo $library_src;?>
+			    <?php if (isset($script_foot)) echo $script_foot;?> 
 			</head>
 
 Javascript Methods
 ==================
 
-compile()
+$this->javascript->compile()
 ---------
-Creates the variables used in the html header.  The default variables are
+Creates the variables used in the html header/footer.  The default variables are
 $library_src for the pointers to the jquery script and $script_foot for
 the javascript elements that you've defined respectively.
 
+$this->javascript->script()
+--------
+Add an additional javascript file to load in your view.
+Accepts two parameters $library_src (string) and $relative (bool).
 
-jQuery Events
+	::
+
+		$this->javascript->script('//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js');
+		
+
+
+Javascript Events
 =============
 
 Events are set up using the following syntax.
 
 	::
 
-		$this->jquery->event('selector', handler() );
+		$this->javascript->event('selector', handler(), [return]);
 		
 		
 	-  "event" is one of: "blur", "change",	"click", "dblclick", "focus", 
@@ -115,10 +135,26 @@ Events are set up using the following syntax.
 		`jQuery selector <http://docs.jquery.com/Selectors>`_. 
 	-  "handler()" is script you write yourself, or an action such as
 		an element from the jQuery Effects.
+	-  "return" value is available for the "click" event, an optional third
+		parameter maybe passed as a BOOLEAN. The default is **TRUE** which will 
+		append a "return false;" statment at the end of the handler.
 
+An example to create a **click** event for the selector **.someClass** you would use:
 
+	::
+	
+		$this->javascript->click('.someClass', 'alert(".someClass was clicked!")');
+		
+This example will generate the following javascript:
 
-jQuery Effects
+	::
+	
+		$(".someClass").click(function(){
+			alert(".someClass was clicked!")
+			return false;
+		});		
+
+Javascript Effects
 ==============
 
 hide() / show()
