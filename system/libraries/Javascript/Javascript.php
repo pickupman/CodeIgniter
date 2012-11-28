@@ -52,6 +52,13 @@ class CI_Javascript extends CI_Driver_Library {
 	protected $_javascript_location = '';
 
 	/**
+	 * Javascript framework url
+	 * 
+	 * @var string
+	 */
+	protected $_javascript_framework_url = '';
+
+	/**
 	 * Valid Javascript Drivers
 	 * 
 	 * @var array
@@ -77,7 +84,8 @@ class CI_Javascript extends CI_Driver_Library {
 		$defaults = array(
 			'adapter',
 			'autoload',
-			'javascript_location'
+			'javascript_location',
+			'javascript_framework_url'
 		);
 
 		if ( ! empty($options))
@@ -94,16 +102,16 @@ class CI_Javascript extends CI_Driver_Library {
 
 		$this->CI =& get_instance();
 
-		$_javascript_location = $this->CI->config->item('javascript_location');
+		$_javascript_framework_url = $this->CI->config->item('javascript_framework_url');
 
 		//Load default javascript source
-		if ($this->_autoload === TRUE && $this->_javascript_location !== '')
+		if ($this->_autoload === TRUE && $this->_javascript_framework_url !== '')
 		{
-			$this->{$this->_adapter}->script($this->_javascript_location);
+			$this->{$this->_adapter}->script($this->_javascript_framework_url);
 		}
-		elseif ($this->_autoload === TRUE && $this->_javascript_location == '' && isset($_javascript_location) && ! empty($_javascript_location))
+		elseif ($this->_autoload === TRUE && $this->_javascript_framework_url == '' && isset($_javascript_framework_url) && ! empty($_javascript_framework_url))
 		{
-			$this->{$this->_adapter}->script($_javascript_location);
+			$this->{$this->_adapter}->script($_javascript_framework_url);
 		}
 		else
 		{
@@ -668,12 +676,8 @@ class CI_Javascript extends CI_Driver_Library {
 	public function external($external_file = '', $relative = FALSE)
 	{
 		$this->CI = &get_instance();
-		
-		if ($external_file !== '')
-		{
-			$this->_javascript_location = $external_file;
-		}
-		elseif ($this->CI->config->item('javascript_location') !== '')
+
+		if ($this->CI->config->item('javascript_location') !== '' && $this->_javascript_location === '')
 		{
 			$this->_javascript_location = $this->CI->config->item('javascript_location');
 		}
@@ -844,6 +848,19 @@ class CI_Javascript extends CI_Driver_Library {
 	}
 
 	// --------------------------------------------------------------------
+
+    /**
+	* Magic method to try calling a method in child driver
+	*
+	* @param void
+	* @return void
+	*/
+    public function __call($method, $args)
+    {
+        return call_user_func_array(array($this->{$this->_adapter}, $method), $args);
+    }
+
+    // --------------------------------------------------------------------
 
 	/**
 	 * Is associative array
