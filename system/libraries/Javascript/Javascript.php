@@ -27,7 +27,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
- * Javascript Class
+ * Javascript Driver
  *
  * @package		CodeIgniter
  * @subpackage	Libraries
@@ -38,51 +38,67 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class CI_Javascript extends CI_Driver_Library {
 
 	/**
+	 * Autoload Javascript tag
+	 * 
+	 * @var bool
+	 */
+	protected $_autoload = TRUE;
+
+	/**
 	 * JavaScript location
 	 *
 	 * @var	string
 	 */
 	protected $_javascript_location = 'js';
-	
+
 	/**
-	 * Valid Javascript drivers
+	 * Valid Javascript Drivers
 	 * 
 	 * @var array
 	 */
 	protected $valid_drivers = array('jquery');
-	
+
 	/**
-	 * Reference to the driver
-	 * 
+	 * Default Javascript Adapter
+	 *
 	 * @var string
 	 */
 	protected $_adapter = 'jquery';
-	
 
 	/**
-	 * Constructor
-	 *
-	 * @param	array	$params
-	 * @return	void
+	 * CodeIgniter superglobal
+	 * 
+	 * @var object
 	 */
-	public function __construct($config = array())
+	protected $CI;
+
+	function __construct($options = array())
 	{
-		$default_config = array(
+		$defaults = array(
 			'adapter',
-			'autoload'
+			'autoload',
+			'javascript_location'
 		);
 
-		foreach ($default_config as $key)
+		if( ! empty($options))
 		{
-			if (isset($config[$key]))
+			foreach($defaults as $key)
 			{
-				$param = '_'.$key;
-
-				$this->{$param} = $config[$key];
+				if (isset($options[$key]) && $options !== '')
+				{
+    				$param = '_'.$key;
+					$this->$param = $options[$key];
+				}
 			}
 		}
 
-		log_message('debug', 'Javascript Class Initialized and loaded. Driver used: ' . $this->_adapter);
+		//Load default javascript source
+		if($this->_autoload === TRUE)
+		{
+			$this->{$this->_adapter}->script($this->_javascript_location);
+		}
+
+		log_message('debug', 'Javascript Class loaded. Driver used: ' . $this->_adapter);
 	}
 
 	// --------------------------------------------------------------------
@@ -609,7 +625,7 @@ class CI_Javascript extends CI_Driver_Library {
 	 */
 	public function compile($view_var = 'script_foot', $script_tags = TRUE)
 	{
-		$this->{$this->_adapter}->_compile($view_var, $script_tags);
+		return $this->{$this->_adapter}->_compile($view_var, $script_tags);
 	}
 
 	// --------------------------------------------------------------------
@@ -639,6 +655,8 @@ class CI_Javascript extends CI_Driver_Library {
 	 */
 	public function external($external_file = '', $relative = FALSE)
 	{
+		$this->CI = &get_instance();
+		
 		if ($external_file !== '')
 		{
 			$this->_javascript_location = $external_file;
@@ -850,7 +868,6 @@ class CI_Javascript extends CI_Driver_Library {
 			return $result;
 		}
 	}
-
 }
 
 /* End of file Javascript.php */

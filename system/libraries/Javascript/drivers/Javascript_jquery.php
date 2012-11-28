@@ -1,41 +1,33 @@
-<?php
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
 /**
  * CodeIgniter
  *
- * An open source application development framework for PHP 5.2.4 or newer
- *
- * NOTICE OF LICENSE
- *
- * Licensed under the Open Software License version 3.0
- *
- * This source file is subject to the Open Software License (OSL 3.0) that is
- * bundled with this package in the files license.txt / license.rst.  It is
- * also available through the world wide web at this URL:
- * http://opensource.org/licenses/OSL-3.0
- * If you did not receive a copy of the license and are unable to obtain it
- * through the world wide web, please send an email to
- * licensing@ellislab.com so we can send you a copy immediately.
+ * An open source application development framework for PHP 4.3.2 or newer
  *
  * @package		CodeIgniter
- * @author		EllisLab Dev Team
- * @copyright	Copyright (c) 2008 - 2012, EllisLab, Inc. (http://ellislab.com/)
- * @license		http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
- * @link		http://codeigniter.com
+ * @author		ExpressionEngine Dev Team
+ * @copyright	Copyright (c) 2008 - 2011, EllisLab, Inc.
+ * @license		http://www.codeigniter.com/user_guide/license.html
+ * @link		http://www.codeigniter.com
  * @since		Version 1.0
  * @filesource
  */
-defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
- * Jquery Class
+ * Jquery Adapter for Javascript Driver
  *
  * @package		CodeIgniter
  * @subpackage	Libraries
+ * @author		ExpressionEngine Dev Team
  * @category	Loader
- * @author		EllisLab Dev Team
- * @link		http://codeigniter.com/user_guide/libraries/javascript.html
+ * @link		http://www.codeigniter.com/user_guide/libraries/javascript.html
  */
+
 class CI_Javascript_jquery extends CI_Driver {
+
+
+	var $CI;
 
 	/**
 	 * JavaScript directory location
@@ -85,8 +77,16 @@ class CI_Javascript_jquery extends CI_Driver {
 	 * @var	string
 	 */
 	public $jquery_ajax_img = '';
-	
 
+
+	public function __construct()
+	{
+		log_message('debug', "Jquery Class Initialized");                
+	}
+
+	// --------------------------------------------------------------------	 
+	// Event Code
+	// --------------------------------------------------------------------	
 	// --------------------------------------------------------------------
 	// Event Code
 	// --------------------------------------------------------------------
@@ -100,7 +100,7 @@ class CI_Javascript_jquery extends CI_Driver {
 	 * @param	string	The code to execute
 	 * @return	string
 	 */
-	protected function _blur($element = 'this', $js = '')
+	function _blur($element = 'this', $js = '')
 	{
 		return $this->_add_event($element, $js, 'blur');
 	}
@@ -116,7 +116,7 @@ class CI_Javascript_jquery extends CI_Driver {
 	 * @param	string	The code to execute
 	 * @return	string
 	 */
-	protected function _change($element = 'this', $js = '')
+	function _change($element = 'this', $js = '')
 	{
 		return $this->_add_event($element, $js, 'change');
 	}
@@ -133,7 +133,7 @@ class CI_Javascript_jquery extends CI_Driver {
 	 * @param	bool	whether or not to return false
 	 * @return	string
 	 */
-	protected function _click($element = 'this', $js = '', $ret_false = TRUE)
+	function _click($element = 'this', $js = '', $ret_false = TRUE)
 	{
 		is_array($js) OR $js = array($js);
 
@@ -156,7 +156,7 @@ class CI_Javascript_jquery extends CI_Driver {
 	 * @param	string	The code to execute
 	 * @return	string
 	 */
-	protected function _dblclick($element = 'this', $js = '')
+	function _dblclick($element = 'this', $js = '')
 	{
 		return $this->_add_event($element, $js, 'dblclick');
 	}
@@ -172,7 +172,7 @@ class CI_Javascript_jquery extends CI_Driver {
 	 * @param	string	The code to execute
 	 * @return	string
 	 */
-	protected function _error($element = 'this', $js = '')
+	function _error($element = 'this', $js = '')
 	{
 		return $this->_add_event($element, $js, 'error');
 	}
@@ -188,7 +188,7 @@ class CI_Javascript_jquery extends CI_Driver {
 	 * @param	string	The code to execute
 	 * @return	string
 	 */
-	protected function _focus($element = 'this', $js = '')
+	function _focus($element = 'this', $js = '')
 	{
 		return $this->_add_event($element, $js, 'focus');
 	}
@@ -205,7 +205,7 @@ class CI_Javascript_jquery extends CI_Driver {
 	 * @param	string	- Javascript code for mouse out
 	 * @return	string
 	 */
-	protected function _hover($element = 'this', $over, $out)
+	function _hover($element = 'this', $over, $out)
 	{
 		$event = "\n\t$(".$this->_prep_element($element).").hover(\n\t\tfunction()\n\t\t{\n\t\t\t{$over}\n\t\t}, \n\t\tfunction()\n\t\t{\n\t\t\t{$out}\n\t\t});\n";
 
@@ -225,7 +225,7 @@ class CI_Javascript_jquery extends CI_Driver {
 	 * @param	string	The code to execute
 	 * @return	string
 	 */
-	protected function _keydown($element = 'this', $js = '')
+	function _keydown($element = 'this', $js = '')
 	{
 		return $this->_add_event($element, $js, 'keydown');
 	}
@@ -241,7 +241,7 @@ class CI_Javascript_jquery extends CI_Driver {
 	 * @param	string	The code to execute
 	 * @return	string
 	 */
-	protected function _keyup($element = 'this', $js = '')
+	function _keyup($element = 'this', $js = '')
 	{
 		return $this->_add_event($element, $js, 'keyup');
 	}
@@ -257,7 +257,7 @@ class CI_Javascript_jquery extends CI_Driver {
 	 * @param	string	The code to execute
 	 * @return	string
 	 */
-	protected function _load($element = 'this', $js = '')
+	function _load($element = 'this', $js = '')
 	{
 		return $this->_add_event($element, $js, 'load');
 	}
@@ -273,7 +273,7 @@ class CI_Javascript_jquery extends CI_Driver {
 	 * @param	string	The code to execute
 	 * @return	string
 	 */
-	protected function _mousedown($element = 'this', $js = '')
+	function _mousedown($element = 'this', $js = '')
 	{
 		return $this->_add_event($element, $js, 'mousedown');
 	}
@@ -289,7 +289,7 @@ class CI_Javascript_jquery extends CI_Driver {
 	 * @param	string	The code to execute
 	 * @return	string
 	 */
-	protected function _mouseout($element = 'this', $js = '')
+	function _mouseout($element = 'this', $js = '')
 	{
 		return $this->_add_event($element, $js, 'mouseout');
 	}
@@ -305,7 +305,7 @@ class CI_Javascript_jquery extends CI_Driver {
 	 * @param	string	The code to execute
 	 * @return	string
 	 */
-	protected function _mouseover($element = 'this', $js = '')
+	function _mouseover($element = 'this', $js = '')
 	{
 		return $this->_add_event($element, $js, 'mouseover');
 	}
@@ -321,7 +321,7 @@ class CI_Javascript_jquery extends CI_Driver {
 	 * @param	string	The code to execute
 	 * @return	string
 	 */
-	protected function _mouseup($element = 'this', $js = '')
+	function _mouseup($element = 'this', $js = '')
 	{
 		return $this->_add_event($element, $js, 'mouseup');
 	}
@@ -336,7 +336,7 @@ class CI_Javascript_jquery extends CI_Driver {
 	 * @param	array	$array_js = array()
 	 * @return	void
 	 */
-	protected function _output($array_js = array())
+	function _output($array_js = array())
 	{
 		if ( ! is_array($array_js))
 		{
@@ -360,7 +360,7 @@ class CI_Javascript_jquery extends CI_Driver {
 	 * @param	string	The code to execute
 	 * @return	string
 	 */
-	protected function _resize($element = 'this', $js = '')
+	function _resize($element = 'this', $js = '')
 	{
 		return $this->_add_event($element, $js, 'resize');
 	}
@@ -376,7 +376,7 @@ class CI_Javascript_jquery extends CI_Driver {
 	 * @param	string	The code to execute
 	 * @return	string
 	 */
-	protected function _scroll($element = 'this', $js = '')
+	function _scroll($element = 'this', $js = '')
 	{
 		return $this->_add_event($element, $js, 'scroll');
 	}
@@ -392,7 +392,7 @@ class CI_Javascript_jquery extends CI_Driver {
 	 * @param	string	The code to execute
 	 * @return	string
 	 */
-	protected function _unload($element = 'this', $js = '')
+	function _unload($element = 'this', $js = '')
 	{
 		return $this->_add_event($element, $js, 'unload');
 	}
@@ -410,7 +410,7 @@ class CI_Javascript_jquery extends CI_Driver {
 	 * @param	string	$class
 	 * @return	string
 	 */
-	protected function _addClass($element = 'this', $class = '')
+	function _addClass($element = 'this', $class = '')
 	{
 		$element = $this->_prep_element($element);
 		return '$('.$element.').addClass("'.$class.'");';
@@ -429,7 +429,7 @@ class CI_Javascript_jquery extends CI_Driver {
 	 * @param	string	$extra
 	 * @return	string
 	 */
-	protected function _animate($element = 'this', $params = array(), $speed = '', $extra = '')
+	function _animate($element = 'this', $params = array(), $speed = '', $extra = '')
 	{
 		$element = $this->_prep_element($element);
 		$speed = $this->_validate_speed($speed);
@@ -468,7 +468,7 @@ class CI_Javascript_jquery extends CI_Driver {
 	 * @param	string	- Javascript callback function
 	 * @return	string
 	 */
-	protected function _fadeIn($element = 'this', $speed = '', $callback = '')
+	function _fadeIn($element = 'this', $speed = '', $callback = '')
 	{
 		$element = $this->_prep_element($element);
 		$speed = $this->_validate_speed($speed);
@@ -493,7 +493,7 @@ class CI_Javascript_jquery extends CI_Driver {
 	 * @param	string	- Javascript callback function
 	 * @return	string
 	 */
-	protected function _fadeOut($element = 'this', $speed = '', $callback = '')
+	function _fadeOut($element = 'this', $speed = '', $callback = '')
 	{
 		$element = $this->_prep_element($element);
 		$speed = $this->_validate_speed($speed);
@@ -518,7 +518,7 @@ class CI_Javascript_jquery extends CI_Driver {
 	 * @param	string	- Javascript callback function
 	 * @return	string
 	 */
-	protected function _hide($element = 'this', $speed = '', $callback = '')
+	function _hide($element = 'this', $speed = '', $callback = '')
 	{
 		$element = $this->_prep_element($element);
 		$speed = $this->_validate_speed($speed);
@@ -542,7 +542,7 @@ class CI_Javascript_jquery extends CI_Driver {
 	 * @param	string	$class
 	 * @return	string
 	 */
-	protected function _removeClass($element = 'this', $class = '')
+	function _removeClass($element = 'this', $class = '')
 	{
 		$element = $this->_prep_element($element);
 		return '$('.$element.').removeClass("'.$class.'");';
@@ -560,7 +560,7 @@ class CI_Javascript_jquery extends CI_Driver {
 	 * @param	string	- Javascript callback function
 	 * @return	string
 	 */
-	protected function _slideUp($element = 'this', $speed = '', $callback = '')
+	function _slideUp($element = 'this', $speed = '', $callback = '')
 	{
 		$element = $this->_prep_element($element);
 		$speed = $this->_validate_speed($speed);
@@ -585,7 +585,7 @@ class CI_Javascript_jquery extends CI_Driver {
 	 * @param	string	- Javascript callback function
 	 * @return	string
 	 */
-	protected function _slideDown($element = 'this', $speed = '', $callback = '')
+	function _slideDown($element = 'this', $speed = '', $callback = '')
 	{
 		$element = $this->_prep_element($element);
 		$speed = $this->_validate_speed($speed);
@@ -610,7 +610,7 @@ class CI_Javascript_jquery extends CI_Driver {
 	 * @param	string	- Javascript callback function
 	 * @return	string
 	 */
-	protected function _slideToggle($element = 'this', $speed = '', $callback = '')
+	function _slideToggle($element = 'this', $speed = '', $callback = '')
 	{
 		$element = $this->_prep_element($element);
 		$speed = $this->_validate_speed($speed);
@@ -633,7 +633,7 @@ class CI_Javascript_jquery extends CI_Driver {
 	 * @param	string	- element
 	 * @return	string
 	 */
-	protected function _toggle($element = 'this')
+	function _toggle($element = 'this')
 	{
 		$element = $this->_prep_element($element);
 		return '$('.$element.').toggle();';
@@ -650,7 +650,7 @@ class CI_Javascript_jquery extends CI_Driver {
 	 * @param	string	$class
 	 * @return	string
 	 */
-	protected function _toggleClass($element = 'this', $class = '')
+	function _toggleClass($element = 'this', $class = '')
 	{
 		$element = $this->_prep_element($element);
 		return '$('.$element.').toggleClass("'.$class.'");';
@@ -668,7 +668,7 @@ class CI_Javascript_jquery extends CI_Driver {
 	 * @param	string	- Javascript callback function
 	 * @return	string
 	 */
-	protected function _show($element = 'this', $speed = '', $callback = '')
+	function _show($element = 'this', $speed = '', $callback = '')
 	{
 		$element = $this->_prep_element($element);
 		$speed = $this->_validate_speed($speed);
@@ -695,7 +695,7 @@ class CI_Javascript_jquery extends CI_Driver {
 	 * @return	string
 	 */
 
-	protected function _updater($container = 'this', $controller, $options = '')
+	function _updater($container = 'this', $controller, $options = '')
 	{
 		$container = $this->_prep_element($container);
 		$controller = (strpos('://', $controller) === FALSE) ? $controller : $this->CI->config->site_url($controller);
@@ -736,7 +736,7 @@ class CI_Javascript_jquery extends CI_Driver {
 	 * @param	string	$hover
 	 * @return	string
 	 */
-	protected function _zebraTables($class = '', $odd = 'odd', $hover = '')
+	function _zebraTables($class = '', $odd = 'odd', $hover = '')
 	{
 		$class = ($class !== '') ? '.'.$class : '';
 		$zebra = "\t\$(\"table{$class} tbody tr:nth-child(even)\").addClass(\"{$odd}\");";
@@ -898,7 +898,7 @@ class CI_Javascript_jquery extends CI_Driver {
 	 * @param	string	The event to pass
 	 * @return	string
 	 */
-	protected function _add_event($element, $js, $event)
+	function _add_event($element, $js, $event)
 	{
 		if (is_array($js))
 		{
@@ -923,8 +923,10 @@ class CI_Javascript_jquery extends CI_Driver {
 	 * @param	bool	$script_tags
 	 * @return	void
 	 */
-	protected function _compile($view_var = 'script_foot', $script_tags = TRUE)
+	function _compile($view_var = 'script_foot', $script_tags = TRUE)
 	{
+		$this->CI =& get_instance();
+
 		// External references
 		$external_scripts = implode('', $this->jquery_code_for_load);
 		$this->CI->load->vars(array('library_src' => $external_scripts));
@@ -943,6 +945,8 @@ class CI_Javascript_jquery extends CI_Driver {
 		$output = ($script_tags === FALSE) ? $script : $this->inline($script);
 
 		$this->CI->load->vars(array($view_var => $output));
+		
+		return $output;
 	}
 
 	// --------------------------------------------------------------------
@@ -954,7 +958,7 @@ class CI_Javascript_jquery extends CI_Driver {
 	 *
 	 * @return	void
 	 */
-	protected function _clear_compile()
+	function _clear_compile()
 	{
 		$this->jquery_code_for_compile = array();
 	}
@@ -969,7 +973,7 @@ class CI_Javascript_jquery extends CI_Driver {
 	 * @param	array	$js
 	 * @return	void
 	 */
-	protected function _document_ready($js)
+	function _document_ready($js)
 	{
 		is_array($js) OR $js = array($js);
 
@@ -1009,7 +1013,7 @@ class CI_Javascript_jquery extends CI_Driver {
 	 * @param	string
 	 * @return	string
 	 */
-	protected function _prep_element($element)
+	function _prep_element($element)
 	{
 		if ($element !== 'this')
 		{
@@ -1029,7 +1033,7 @@ class CI_Javascript_jquery extends CI_Driver {
 	 * @param	string
 	 * @return	string
 	 */
-	protected function _validate_speed($speed)
+	function _validate_speed($speed)
 	{
 		if (in_array($speed, array('slow', 'normal', 'fast')))
 		{
