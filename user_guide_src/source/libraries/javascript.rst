@@ -12,13 +12,14 @@ CodeIgniter does not require Javascript to run.
 Configuration
 =============
 
-To use a Javascript library you will need to set a configuration item for
+To use a Javascript library you will need to set some configuration items for
 the path to the Javascript library that you'll be using.
 
 	::
 
-		$config['javascript_location'] = 
-			'//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js';
+		$config['javascript_ajax_img'] = 'images/ajax-loader.gif';
+		$config['javascript_location'] = 'path/to/js/folder/';
+		$config['javascript_framework_url'] = '//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js';
 
 	.. note:: The example above uses the `Google CDN 
 		<http://developers.google.com/speed/libraries/devguide>`_ 
@@ -53,8 +54,10 @@ You may also pass in the options array the javascript location library as well.
 
 	::
 	
-		$this->load->driver('javascript', array('adapter' => 'jquery', 
-			'javascript_location' => '//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js'));
+		$this->load->driver('javascript', array('adapter' => 'jquery',
+			'javascript_location' => 'path/to/js/folder/',
+			'javascript_framework_url' => '//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
+		);
 		
 
 Add Javascript Elements and Compile
@@ -95,8 +98,8 @@ example:
 			    <?php if (isset($script_foot)) echo $script_foot;?> 
 			</head>
 
-Javascript Methods
-==================
+Methods
+=======
 
 $this->javascript->compile()
 ----------------------------
@@ -137,8 +140,8 @@ Accepts two parameters $library_src (string) and $relative (bool).
 		
 
 
-Javascript Events
-=================
+Events
+======
 
 Events are set up using the following syntax.
 
@@ -176,8 +179,8 @@ This example will generate the following javascript:
 			return false;
 		});		
 
-Javascript Effects
-==================
+Effects
+=======
 
 hide() / show()
 ---------------
@@ -281,9 +284,8 @@ These effects cause an element(s) to slide.
 		alternatively a number of milliseconds.
 	-  "callback" **optional** A function to be execute when finished.
 
-
-jQuery Attributes
-=================
+Attributes
+==========
 
 toggleClass()
 -------------

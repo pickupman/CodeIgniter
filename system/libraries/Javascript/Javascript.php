@@ -849,16 +849,16 @@ class CI_Javascript extends CI_Driver_Library {
 
 	// --------------------------------------------------------------------
 
-    /**
+	/**
 	* Magic method to try calling a method in child driver
 	*
 	* @param void
 	* @return void
 	*/
-    public function __call($method, $args)
-    {
-        return call_user_func_array(array($this->{$this->_adapter}, $method), $args);
-    }
+	public function __call($method, $args)
+	{
+		return call_user_func_array(array($this->{$this->_adapter}, $method), $args);
+	}
 
     // --------------------------------------------------------------------
 
