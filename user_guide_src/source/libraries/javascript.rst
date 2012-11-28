@@ -99,13 +99,35 @@ Javascript Methods
 ==================
 
 $this->javascript->compile()
----------
+----------------------------
 Creates the variables used in the html header/footer.  The default variables are
 $library_src for the pointers to the jquery script and $script_foot for
 the javascript elements that you've defined respectively.
 
+$this->javascript->clear_compile()
+----------------------------------
+Allows you to clear any javascript that has been previously set. The compile() method returns
+the output. Calling clear_compile() will allow you to create another block of javascript. You
+will need to call the compile() method again to build any javascript that was generated after
+clearing it.
+
+$this->javascript->generate_json()
+----------------------------------
+Can be passed a database result or associative array and returns a JSON formatted string. Accepts
+two parameters $result and $match_array_type. $result can be either an result object or array. The
+second parameter is boolean if the JSON should return objects as array. The default value is FALSE.
+
+	::
+		
+		$json = array('foo' => 'bar');
+		$this->javascript->generate_json($json);
+		
+		//Outputs
+		{"foo":"bar"}
+
+
 $this->javascript->script()
---------
+---------------------------
 Add an additional javascript file to load in your view.
 Accepts two parameters $library_src (string) and $relative (bool).
 
@@ -116,7 +138,7 @@ Accepts two parameters $library_src (string) and $relative (bool).
 
 
 Javascript Events
-=============
+=================
 
 Events are set up using the following syntax.
 
@@ -155,7 +177,7 @@ This example will generate the following javascript:
 		});		
 
 Javascript Effects
-==============
+==================
 
 hide() / show()
 ---------------
