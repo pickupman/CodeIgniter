@@ -631,7 +631,6 @@ class CI_Javascript extends CI_Driver_Library {
 		return $this->{$this->_adapter}->_show($element, $speed, $callback);
 	}
 
-
 	// --------------------------------------------------------------------
 
 	/**
