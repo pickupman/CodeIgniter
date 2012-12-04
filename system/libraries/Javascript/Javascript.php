@@ -673,7 +673,7 @@ class CI_Javascript extends CI_Driver_Library {
 	 * @return	string
 	 */
 	public function external($external_file = '', $relative = FALSE)
-	{
+	{var_dump($this->_javascript_location);
 		$this->CI = &get_instance();
 
 		if ($this->CI->config->item('javascript_location') !== '' && $this->_javascript_location === '')
@@ -685,7 +685,7 @@ class CI_Javascript extends CI_Driver_Library {
 		{
 			$str = $this->_open_script($external_file);
 		}
-		elseif (strpos($this->_javascript_location, 'http://') !== FALSE)
+		elseif (strpos($this->_javascript_location, 'http://') !== FALSE OR strpos($this->_javascript_location, 'https://') !== FALSE OR strpos($this->_javascript_location, '//') !== FALSE)
 		{
 			$str = $this->_open_script($this->_javascript_location.$external_file);
 		}
